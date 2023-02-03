@@ -46,6 +46,33 @@ router.post("/add/", async function(req, res, next) {
   }
 });
 
+/** SEARCH A CUSTOMER . */
+
+router.get("/search/", async function(req, res, next) {
+  try {
+    return res.render("customer_search.html");
+  } catch (err) {
+    return next(err);
+  }
+});
+
+
+/** HANDLE SEARCH CUSTOMER */
+
+router.post("/search/", async function(req, res, next) {
+  try {
+    const firstName = req.body.firstName;
+
+    const customer = await Customer.getFirstName(firstName);
+
+    return res.render("customer_result.html", {customer});
+  } catch (err) {
+    return next(err);
+  }
+});
+
+
+
 /** Show a customer, given their ID. */
 
 router.get("/:id/", async function(req, res, next) {
